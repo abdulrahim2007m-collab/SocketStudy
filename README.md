@@ -58,7 +58,9 @@ Socket programming finds applications in various domains, including web developm
 <img width="618" height="1073" alt="image" src="https://github.com/user-attachments/assets/cddad57a-c980-480d-ab55-bea63b60dce6" />
 
 
+
 ##Output:
+
 
 <img width="815" height="325" alt="image" src="https://github.com/user-attachments/assets/3e11b969-8a6c-4b90-9d4f-93f90afdabb7" />
 
