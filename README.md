@@ -55,62 +55,8 @@ Socket programming finds applications in various domains, including web developm
    
 ##Program:
 
-import socket
-import threading
-import time 
+<img width="618" height="1073" alt="image" src="https://github.com/user-attachments/assets/cddad57a-c980-480d-ab55-bea63b60dce6" />
 
-def server():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(("127.0.0.1", 5000))
-    s.listen(1)
-    print("Server waiting...")
-
-    conn, addr = s.accept()
-    print("Connected by:", addr)
-
-    for i in range(4):  # receive 4 messages
-        data = conn.recv(1024)
-        if not data:
-            break
-        print("Client says:", data.decode())
-
-        reply = f"Message {i+1} received by server"
-        conn.send(reply.encode())
-
-    conn.close()
-    s.close()
-
-def client():
-    time.sleep(1)  # wait for server to start
-
-    c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    c.connect(("127.0.0.1", 5000))
-
-    messages = [
-        "Hello Server",
-        "How are you?",
-        "This is message 3",
-        "Goodbye!"
-    ]
-
-    for msg in messages:
-        print("Client sends:", msg)
-        c.send(msg.encode())
-
-        response = c.recv(1024)
-        print("Server says:", response.decode())
-        time.sleep(0.5)  # just to make output readable
-
-    c.close()
-
-server_thread = threading.Thread(target=server)
-client_thread = threading.Thread(target=client)
-
-server_thread.start()
-client_thread.start()
-
-server_thread.join()
-client_thread.join()
 
 ##Output:
 
