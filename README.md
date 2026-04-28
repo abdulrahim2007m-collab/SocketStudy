@@ -1,7 +1,7 @@
 # Ex.No:1a  			Study of Socket Programming
 
 ## Aim: 
-To perform a study on Socket Programming
+To impliment the respective python code to a study on Socket Programming
 ## Introduction:
 
  	Socket programming is a crucial aspect of network communication, allowing for data exchange between computers over a network. It forms the backbone of various networked applications, enabling communication between clients and servers. This study explores the fundamental concepts of socket programming, its use cases, and provides a practical example to demonstrate its implementation.
@@ -52,6 +52,69 @@ Socket programming finds applications in various domains, including web developm
 3.	File Transfer Protocol: Protocols like FTP (File Transfer Protocol) utilize socket programming for transferring files between a client and a server.
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
+   
+##Program:
+
+import socket
+import threading
+import time 
+
+def server():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(("127.0.0.1", 5000))
+    s.listen(1)
+    print("Server waiting...")
+
+    conn, addr = s.accept()
+    print("Connected by:", addr)
+
+    for i in range(4):  # receive 4 messages
+        data = conn.recv(1024)
+        if not data:
+            break
+        print("Client says:", data.decode())
+
+        reply = f"Message {i+1} received by server"
+        conn.send(reply.encode())
+
+    conn.close()
+    s.close()
+
+def client():
+    time.sleep(1)  # wait for server to start
+
+    c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    c.connect(("127.0.0.1", 5000))
+
+    messages = [
+        "Hello Server",
+        "How are you?",
+        "This is message 3",
+        "Goodbye!"
+    ]
+
+    for msg in messages:
+        print("Client sends:", msg)
+        c.send(msg.encode())
+
+        response = c.recv(1024)
+        print("Server says:", response.decode())
+        time.sleep(0.5)  # just to make output readable
+
+    c.close()
+
+server_thread = threading.Thread(target=server)
+client_thread = threading.Thread(target=client)
+
+server_thread.start()
+client_thread.start()
+
+server_thread.join()
+client_thread.join()
+
+##Output:
+
+<img width="815" height="325" alt="image" src="https://github.com/user-attachments/assets/3e11b969-8a6c-4b90-9d4f-93f90afdabb7" />
 
 
 ## Result:
